@@ -1,73 +1,107 @@
+import React, { useState } from "react";
 import "./App.css";
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 function App() {
+  const [productsList, setProductsList] = useState([]);
+  const [productionYear, setProductionYear] = useState(
+    new Date().getFullYear()
+  );
+  const [productMaker, setProductMaker] = useState("");
+  const [productCost, setProductCost] = useState("");
+  
+
+  function addProduct() {
+    const newProduct = {
+      productionYear: productionYear,
+      productMaker: productMaker,
+      productCost: productCost,
+    };
+    setProductsList((productsList) => [...productsList, newProduct]);
+    setProductMaker("");
+    setProductCost("");
+  }
+  function changeYear(e) {
+    setProductionYear(e.target.value);
+  }
+  function changeMaker(e) {
+    setProductMaker(e.target.value);
+  }
+  function changeCost(e) {
+    setProductCost(e.target.value);
+  }
+
   return (
     <>
- 
-        <Container className="my-5">
-            <Row className="text-center">
+      <div className="container">
+        <div className="row mb-3">
+          <div className="col-4 mx-auto">
+            <div className="mb-3">
+              <input
+                className="w-100"
+                onChange={changeYear}
+                value={productionYear}
+                placeholder="Product cost"
+                type="text"
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                className="w-100"
+                onChange={changeMaker}
+                value={productMaker}
+                placeholder="Product model"
+                type="text"
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                className="w-100"
+                onChange={changeCost}
+                value={productCost}
+                placeholder="Product year"
+                type="text"
+              />
+            </div>
+            <div>
+              <button className="btn btn-primary w-100" onClick={addProduct}>
+                Add product
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul className="list-group">
+        {productsList.map((item, index) => {
+          return (
+            <Container className="my-5" key={index}>
+              <Row className="text-center">
                 <Col lg={4} md={6} className="mb-4">
-                    <Card className="pricing-table border-0 shadow">
-                        <Card.Header className="pricing-header bg-light text-dark">
-                            <h2 className="h4">Basic</h2>
-                            <p className="h1">$19<span className="h6">/month</span></p>
-                        </Card.Header>
-                        <Card.Body className="pricing-body text-center">
-                            <ul className="list-unstyled">
-                                <li>10 Users</li>
-                                <li>5GB Storage</li>
-                                <li>Basic Support</li>
-                            </ul>
-                            <Button variant="primary">Sign Up</Button>
-                        </Card.Body>
-                        <Card.Footer className="pricing-footer bg-light text-dark">
-                            <small>Most popular</small>
-                        </Card.Footer>
-                    </Card>
+                  <Card className="pricing-table border-0 shadow">
+                    <Card.Header className="pricing-header bg-light text-dark">
+                      <h2 className="h4"></h2>
+                      <p className="h1">
+                      {item.productMaker}<span className="h6"></span>
+                      </p>
+                    </Card.Header>
+                    <Card.Body className="pricing-body text-center">
+                      <ul className="list-unstyled">
+                        <li>{item.productionCost}$</li>
+                        <li>{item.productCost}</li>
+                      </ul>
+                    </Card.Body>
+                    <Card.Footer className="pricing-footer bg-light text-dark">
+                      <small>Best quality</small>
+                    </Card.Footer>
+                  </Card>
                 </Col>
-                <Col lg={4} md={6} className="mb-4">
-                    <Card className="pricing-table border-0 shadow">
-                        <Card.Header className="pricing-header bg-primary text-white">
-                            <h2 className="h4">Standard</h2>
-                            <p className="h1">$39<span className="h6">/month</span></p>
-                        </Card.Header>
-                        <Card.Body className="pricing-body text-center">
-                            <ul className="list-unstyled">
-                                <li>50 Users</li>
-                                <li>20GB Storage</li>
-                                <li>Priority Support</li>
-                            </ul>
-                            <Button variant="light">Sign Up</Button>
-                        </Card.Body>
-                        <Card.Footer className="pricing-footer bg-light text-dark">
-                            <small>Recommended</small>
-                        </Card.Footer>
-                    </Card>
-                </Col>
-                <Col lg={4} md={6} className="mb-4">
-                    <Card className="pricing-table border-0 shadow">
-                        <Card.Header className="pricing-header bg-dark text-white">
-                            <h2 className="h4">Premium</h2>
-                            <p className="h1">$99<span className="h6">/month</span></p>
-                        </Card.Header>
-                        <Card.Body className="pricing-body text-center">
-                            <ul className="list-unstyled">
-                                <li>Unlimited Users</li>
-                                <li>100GB Storage</li>
-                                <li>24/7 Support</li>
-                            </ul>
-                            <Button variant="light">Sign Up</Button>
-                        </Card.Body>
-                        <Card.Footer className="pricing-footer bg-light text-dark">
-                            <small>Best Value</small>
-                        </Card.Footer>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
-        </>
-    );
+              </Row>
+            </Container>
+          );
+        })}
+      </ul>
+    </>
+  );
 }
 
 export default App;
